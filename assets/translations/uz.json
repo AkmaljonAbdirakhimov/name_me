@@ -27,6 +27,7 @@
     "style_modern": "Zamonaviy",
     "style_unique": "O'ziga xos va noyob",
     "suggested_names": "Tavsiya etilgan ismlar",
+    "favorite_names": "Sevimli ismlar",
     "origin_label": "Kelib chiqishi",
     "start_over": "Qaytadan boshlash",
     "loading": "Ismlar yaratilmoqda...",
@@ -40,6 +41,7 @@
     "popularity_tooltip": "Ismning mashhurligi",
     "name_required": "Iltimos to'liq ism kiriting",
     "generating_more_suggestions": "Ko'proq ismlar yaratilmoqda...",
+    "no_favorite_names": "Sevimli ismlar mavjud emas",
     "countries": {
       "AE": "Birlashgan Arab Amirliklari",
       "AF": "Afgʻoniston",

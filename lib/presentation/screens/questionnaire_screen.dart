@@ -1,9 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../application/application.dart';
 import '../presentation.dart';
+import '../widgets/app_title.dart';
 import '../widgets/language_selector.dart';
 
 class QuestionnaireScreen extends StatelessWidget {
@@ -11,105 +12,56 @@ class QuestionnaireScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          tr('app_title', context: context),
-          style: const TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
+    return BlocProvider(
+      create: (context) => GetIt.I<QuestionnaireBloc>(),
+      child: Builder(builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            leading: const LanguageSelector(),
+            title: const AppTitle(),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+                    return BlocProvider(
+                      create: (context) => GetIt.I<NameSuggestionsBloc>()
+                        ..add(const NameSuggestionsEvent.loadFavoriteNames()),
+                      child: const FavoriteNamesScreen(),
+                    );
+                  }));
+                },
+                icon: const Icon(
+                  Icons.favorite,
+                  color: Colors.pink,
+                ),
+              )
+            ],
           ),
-        ),
-        actions: const [
-          LanguageSelector(),
-        ],
-      ),
-      body: SafeArea(
-        child: BlocBuilder<QuestionnaireBloc, QuestionnaireState>(
-          builder: (context, state) {
-            if (state.isLoading && state.suggestions.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Colors.pink.shade200),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      tr('loading', context: context),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
+          body: BlocConsumer<QuestionnaireBloc, QuestionnaireState>(
+            listener: (context, state) {
+              if (state.currentPreference != null) {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (ctx) {
+                  return BlocProvider(
+                    create: (context) => GetIt.I<NameSuggestionsBloc>()
+                      ..add(NameSuggestionsEvent.generateNames(
+                          state.currentPreference!))
+                      ..add(const NameSuggestionsEvent.loadFavoriteNames()),
+                    child: const NameSuggestionsScreen(),
+                  );
+                }));
+              }
+            },
+            builder: (context, state) {
+              return QuestionView(
+                question: state.questions[state.currentQuestionIndex],
+                progress:
+                    (state.currentQuestionIndex + 1) / state.questions.length,
               );
-            }
-
-            if (state.error != null) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.error_outline,
-                      size: 48,
-                      color: Colors.pink.shade200,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      tr('error_generating', context: context),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    ElevatedButton(
-                      onPressed: () => context
-                          .read<QuestionnaireBloc>()
-                          .add(const QuestionnaireEvent.reset()),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.pink.shade200,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 32,
-                          vertical: 16,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Text(
-                        tr('try_again', context: context),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            if (state.suggestions.isNotEmpty) {
-              return ResultsScreen(
-                suggestions: state.suggestions,
-                isGenerating: state.isGenerating,
-              );
-            }
-
-            return QuestionView(
-              question: state.questions[state.currentQuestionIndex],
-              progress:
-                  (state.currentQuestionIndex + 1) / state.questions.length,
-            );
-          },
-        ),
-      ),
+            },
+          ),
+        );
+      }),
     );
   }
 }

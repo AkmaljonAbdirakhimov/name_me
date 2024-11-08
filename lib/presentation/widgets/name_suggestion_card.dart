@@ -7,12 +7,21 @@ import 'info_row.dart';
 class NameSuggestionCard extends StatelessWidget {
   final NameSuggestion suggestion;
   final bool animate;
+  final bool showSaveButton;
+  final VoidCallback? onSave;
+  final VoidCallback? onRemove;
+  final bool isFavorite;
 
   const NameSuggestionCard({
     super.key,
     required this.suggestion,
     this.animate = false,
+    this.showSaveButton = true,
+    this.onSave,
+    this.onRemove,
+    this.isFavorite = false,
   });
+
   @override
   Widget build(BuildContext context) {
     final lang = context.locale.languageCode;
@@ -40,42 +49,56 @@ class NameSuggestionCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (suggestion.popularityScore != null)
-                  Tooltip(
-                    message: 'popularity_tooltip'.tr(context: context),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.pink.shade50,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: Colors.pink.shade200,
-                          width: 1,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.trending_up,
-                            size: 16,
-                            color: Colors.pink.shade400,
+                Row(
+                  children: [
+                    if (suggestion.popularityScore != null)
+                      Tooltip(
+                        message: 'popularity_tooltip'.tr(context: context),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
                           ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${suggestion.popularityScore?.round() ?? 0}%',
-                            style: TextStyle(
-                              color: Colors.pink.shade400,
-                              fontWeight: FontWeight.bold,
+                          decoration: BoxDecoration(
+                            color: Colors.pink.shade50,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.pink.shade200,
+                              width: 1,
                             ),
                           ),
-                        ],
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.trending_up,
+                                size: 16,
+                                color: Colors.pink.shade400,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${suggestion.popularityScore?.round() ?? 0}%',
+                                style: TextStyle(
+                                  color: Colors.pink.shade400,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    if (showSaveButton) ...[
+                      const SizedBox(width: 8),
+                      IconButton(
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: Colors.pink,
+                        ),
+                        onPressed: isFavorite ? onRemove : onSave,
+                      ),
+                    ],
+                  ],
+                ),
               ],
             ),
             const SizedBox(height: 16),

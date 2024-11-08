@@ -26,7 +26,8 @@
     "style_traditional": "Classic & Traditional",
     "style_modern": "Contemporary & Modern",
     "style_unique": "Distinctive & Unique",
-    "suggested_names": "Suggested Names",
+    "suggested_names": "Suggested names",
+    "favorite_names": "Favorite names",
     "origin_label": "Origin",
     "start_over": "Start Over",
     "loading": "Generating names...",
@@ -40,6 +41,7 @@
     "popularity_tooltip": "Name Popularity",
     "name_required": "Please enter the full name",
     "generating_more_suggestions": "Generating more suggestions...",
+    "no_favorite_names": "No favorite names",
     "countries": {
       "AE": "United Arab Emirates",
       "AF": "Afghanistan",

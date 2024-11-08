@@ -23,11 +23,13 @@ class GeneratingCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 16),
-            Text(
-              'generating_more_suggestions'.tr(context: context),
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+            Expanded(
+              child: Text(
+                'generating_more_suggestions'.tr(context: context),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ],

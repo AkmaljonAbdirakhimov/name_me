@@ -9,6 +9,7 @@ class NameSuggestion extends Equatable {
   final LocalizedString culturalContext;
   final LocalizedString familyConnection;
   final int? popularityScore;
+  final bool isFavorite;
   const NameSuggestion({
     required this.name,
     required this.meaning,
@@ -16,6 +17,7 @@ class NameSuggestion extends Equatable {
     required this.culturalContext,
     required this.familyConnection,
     this.popularityScore,
+    this.isFavorite = false,
   });
 
   NameSuggestion copyWith({
@@ -25,6 +27,7 @@ class NameSuggestion extends Equatable {
     LocalizedString? culturalContext,
     LocalizedString? familyConnection,
     int? popularityScore,
+    bool? isFavorite,
   }) {
     return NameSuggestion(
       name: name ?? this.name,
@@ -33,6 +36,7 @@ class NameSuggestion extends Equatable {
       culturalContext: culturalContext ?? this.culturalContext,
       familyConnection: familyConnection ?? this.familyConnection,
       popularityScore: popularityScore ?? this.popularityScore,
+      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 

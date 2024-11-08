@@ -27,6 +27,7 @@
     "style_modern": "Современный",
     "style_unique": "Особенный и уникальный",
     "suggested_names": "Предложенные имена",
+    "favorite_names": "Любимые имена",
     "origin_label": "Происхождение",
     "start_over": "Начать сначала",
     "loading": "Генерация имён...",
@@ -40,6 +41,7 @@
     "popularity_tooltip": "Популярность имени",
     "name_required": "Пожалуйста, введите полное имя",
     "generating_more_suggestions": "Создаются дополнительные варианты...",
+    "no_favorite_names": "Нет любимых имен",
     "countries": {
       "AE": "Объединённые Арабские Эмираты",
       "AF": "Афганистан",

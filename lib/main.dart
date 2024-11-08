@@ -1,10 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get_it/get_it.dart';
-
-import 'application/application.dart';
 import 'injection.dart';
 import 'presentation/presentation.dart';
 
@@ -51,10 +47,7 @@ class MyApp extends StatelessWidget {
           surfaceTintColor: Colors.white,
         ),
       ),
-      home: BlocProvider(
-        create: (context) => GetIt.I<QuestionnaireBloc>(),
-        child: const QuestionnaireScreen(),
-      ),
+      home: const QuestionnaireScreen(),
     );
   }
 }
