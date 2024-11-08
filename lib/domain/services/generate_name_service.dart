@@ -25,14 +25,11 @@ class GenerateNamesService {
         final text = response.text ?? '';
         buffer += text;
 
-        print(text);
-
         final startIndex = buffer.indexOf('[');
         final endIndex = buffer.lastIndexOf(']');
 
         try {
           if (startIndex != -1 && endIndex != -1) {
-            print(buffer.substring(startIndex, endIndex + 1));
             final List<dynamic> parsed =
                 json.decode(buffer.substring(startIndex, endIndex + 1));
             final suggestions =
@@ -45,13 +42,13 @@ class GenerateNamesService {
             buffer = buffer.substring(endIndex + 1);
           }
         } catch (e) {
-          print('Error parsing remaining buffer: $e');
+          // print('Error parsing remaining buffer: $e');
           continue;
         }
       }
-    } catch (e, stack) {
-      print(e);
-      print(stack);
+    } catch (e) {
+      // print(e);
+      // print(stack);
       throw Exception('Failed to generate names: $e');
     }
   }

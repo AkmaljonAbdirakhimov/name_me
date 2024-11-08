@@ -33,7 +33,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         emit(state.copyWith(currentPreference: preferences));
       }
     } catch (e) {
-      print("Error: $e");
+      // print("Error: $e");
     }
   }
 }

@@ -12,6 +12,7 @@ class QuestionnaireScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return BlocProvider(
       create: (context) => GetIt.I<QuestionnaireBloc>(),
       child: Builder(builder: (context) {

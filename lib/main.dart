@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           surfaceTintColor: Colors.white,
         ),
       ),
-      home: const QuestionnaireScreen(),
+      home: const SplashScreen(),
     );
   }
 }
