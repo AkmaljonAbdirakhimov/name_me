@@ -68,7 +68,7 @@ class NavigationButtons extends StatelessWidget {
                   ),
                   child: Text(
                     isLastQuestion
-                        ? 'finish'.tr(context: context)
+                        ? 'generate'.tr(context: context)
                         : 'next'.tr(context: context),
                     style: const TextStyle(
                       fontSize: 16,
