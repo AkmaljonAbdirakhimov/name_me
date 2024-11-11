@@ -17,6 +17,7 @@ class GenerateNamesService {
   ) async* {
     try {
       final prompt = _buildPrompt(preferences);
+      print(prompt);
       final content = [Content.text(prompt)];
 
       String buffer = '';
@@ -24,8 +25,6 @@ class GenerateNamesService {
           in _generativeModel.generateContentStream(content)) {
         final text = response.text ?? '';
         buffer += text;
-
-        print(text);
 
         final startIndex = buffer.indexOf('[');
         final endIndex = buffer.lastIndexOf(']');
@@ -56,6 +55,16 @@ class GenerateNamesService {
   }
 
   String _buildPrompt(NamePreference preferences) {
+    final qualities = preferences.qualities
+        .map((q) => AppConstants.namePreferences[q])
+        .toList()
+        .join(", ");
+
+    final styles = preferences.style
+        .map((s) => AppConstants.namePreferences[s])
+        .toList()
+        .join(", ");
+
     return '''
 You are a baby name expert specializing in names from ${preferences.country}. 
 You must respond ONLY with a JSON containing 5 name suggestions.
@@ -97,8 +106,8 @@ Format each name suggestion using exactly this structure:
 Consider these requirements when generating names:
 - Gender: ${AppConstants.namePreferences[preferences.gender]}
 - Origin: ${AppConstants.namePreferences[preferences.origin]}
-- Qualities: ${AppConstants.namePreferences[preferences.qualities]}
-- Style: ${AppConstants.namePreferences[preferences.style]}
+- Qualities: $qualities
+- Style: $styles
 - Country Context: ${preferences.country}
 ${preferences.additionalNotes != null ? '- Additional Notes: ${preferences.additionalNotes}' : ''}
 
