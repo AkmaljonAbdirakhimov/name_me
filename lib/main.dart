@@ -49,6 +49,15 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const SplashScreen(),
+      builder: (context, child) {
+        return Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+                maxWidth: 500), // Set your desired max width
+            child: child!,
+          ),
+        );
+      },
     );
   }
 }

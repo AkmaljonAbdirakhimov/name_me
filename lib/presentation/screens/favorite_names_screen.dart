@@ -24,28 +24,6 @@ class FavoriteNamesScreen extends StatelessWidget {
       ),
       body: BlocBuilder<NameSuggestionsBloc, NameSuggestionsState>(
         builder: (context, state) {
-          if (state.isLoading) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(Colors.pink.shade200),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    tr('loading', context: context),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }
-
           if (state.error != null) {
             return Center(
               child: Column(

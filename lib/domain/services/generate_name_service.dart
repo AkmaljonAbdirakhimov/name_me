@@ -25,6 +25,8 @@ class GenerateNamesService {
         final text = response.text ?? '';
         buffer += text;
 
+        print(text);
+
         final startIndex = buffer.indexOf('[');
         final endIndex = buffer.lastIndexOf(']');
 

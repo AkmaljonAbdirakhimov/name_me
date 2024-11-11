@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +15,7 @@ class QuestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
+      width: double.maxFinite,
       decoration: BoxDecoration(
         color: Colors.pink[50],
         borderRadius: BorderRadius.circular(16),

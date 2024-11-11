@@ -83,32 +83,6 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
           );
         },
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () {
-      //     if (_formKey.currentState!.validate()) {
-      //       context
-      //           .read<QuestionnaireBloc>()
-      //           .add(QuestionnaireEvent.answerSelected(controller.text.trim()));
-      //     }
-      //   },
-      //   backgroundColor: Colors.pink.shade200,
-      //   foregroundColor: Colors.white,
-      //   extendedPadding: const EdgeInsets.symmetric(
-      //     horizontal: 32,
-      //     vertical: 16,
-      //   ),
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(12),
-      //   ),
-      //   label: Text(
-      //     tr('continue', context: context),
-      //     style: const TextStyle(
-      //       fontSize: 16,
-      //       fontWeight: FontWeight.bold,
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
