@@ -42,6 +42,8 @@
     "name_required": "Please enter the full name",
     "generating_more_suggestions": "Generating more suggestions...",
     "no_favorite_names": "No favorite names",
+    "next": "Next",
+    "previous": "Previous",
     "countries": {
       "AE": "United Arab Emirates",
       "AF": "Afghanistan",

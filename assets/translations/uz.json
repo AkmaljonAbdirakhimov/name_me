@@ -42,6 +42,8 @@
     "name_required": "Iltimos to'liq ism kiriting",
     "generating_more_suggestions": "Ko'proq ismlar yaratilmoqda...",
     "no_favorite_names": "Sevimli ismlar mavjud emas",
+    "next": "Keyingi",
+    "previous": "Oldingi",
     "countries": {
       "AE": "Birlashgan Arab Amirliklari",
       "AF": "Afgʻoniston",
