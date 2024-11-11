@@ -21,7 +21,15 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
     try {
       final currentQuestion = state.questions[state.currentQuestionIndex];
 
-      final newAnswers = Map<String, dynamic>.from(state.answers);
+      final Map<String, dynamic> newAnswers = Map<String, dynamic>.from(
+        state.answers.map((key, value) {
+          if (value is List) {
+            return MapEntry(key, List<String>.from(value));
+          }
+          return MapEntry(key, value);
+        }),
+      );
+
       if (currentQuestion.isMultipleSelect) {
         newAnswers[currentQuestion.type] ??= <String>[];
         if (newAnswers[currentQuestion.type].contains(event.answer)) {
@@ -37,8 +45,9 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         answers: newAnswers,
         currentAnswer: event.answer,
       ));
-    } catch (e) {
+    } catch (e, stack) {
       print(e);
+      print(stack);
     }
   }
 
@@ -61,8 +70,9 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         final preference = NamePreference.fromMap(state.answers);
         emit(state.copyWith(currentPreference: preference));
       }
-    } catch (e) {
+    } catch (e, stack) {
       print(e);
+      print(stack);
     }
   }
 
@@ -70,18 +80,21 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
     _PreviousQuestion event,
     Emitter<QuestionnaireState> emit,
   ) {
-    if (state.currentQuestionIndex > 0) {
-      final previousIndex = state.currentQuestionIndex - 1;
-      final previousQuestion = state.questions[previousIndex];
+    try {
+      if (state.currentQuestionIndex > 0) {
+        final previousIndex = state.currentQuestionIndex - 1;
+        final previousQuestion = state.questions[previousIndex];
 
-      final savedAnswer = state.answers[previousQuestion.type];
+        final savedAnswer = state.answers[previousQuestion.type];
 
-      print(savedAnswer);
-
-      emit(state.copyWith(
-        currentQuestionIndex: previousIndex,
-        currentAnswer: savedAnswer,
-      ));
+        emit(state.copyWith(
+          currentQuestionIndex: previousIndex,
+          currentAnswer: savedAnswer,
+        ));
+      }
+    } catch (e, stack) {
+      print(e);
+      print(stack);
     }
   }
 }

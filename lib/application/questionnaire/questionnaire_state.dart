@@ -5,7 +5,7 @@ class QuestionnaireState extends Equatable {
   final NamePreference? currentPreference;
   final List<Question> questions;
   final Map<String, dynamic> answers;
-  final String? currentAnswer;
+  final dynamic currentAnswer;
 
   const QuestionnaireState({
     required this.currentQuestionIndex,
@@ -20,7 +20,7 @@ class QuestionnaireState extends Equatable {
     NamePreference? currentPreference,
     List<Question>? questions,
     Map<String, dynamic>? answers,
-    String? currentAnswer,
+    dynamic currentAnswer,
   }) {
     return QuestionnaireState(
       currentQuestionIndex: currentQuestionIndex ?? this.currentQuestionIndex,

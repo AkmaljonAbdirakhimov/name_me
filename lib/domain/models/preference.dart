@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class NamePreference extends Equatable {
   final String gender;
   final String origin;
-  final String qualities;
+  final List<String> qualities;
   final List<String> style;
   final String country;
   final String? additionalNotes;
@@ -25,7 +25,7 @@ class NamePreference extends Equatable {
     String? country,
     String? gender,
     String? origin,
-    String? qualities,
+    List<String>? qualities,
     List<String>? style,
     String? additionalNotes,
     String? fatherName,
@@ -48,8 +48,8 @@ class NamePreference extends Equatable {
       'country': country,
       'gender': gender,
       'origin': origin,
-      'qualities': qualities,
-      'style': style,
+      'qualities': qualities.join(", "),
+      'style': style.join(", "),
       'additionalNotes': additionalNotes,
       'fatherName': fatherName,
       'motherName': motherName,
@@ -61,7 +61,7 @@ class NamePreference extends Equatable {
       country: map['country'] as String,
       gender: map['gender'] as String,
       origin: map['origin'] as String,
-      qualities: map['qualities'] as String,
+      qualities: List<String>.from(map['qualities']),
       style: List<String>.from(map['style']),
       additionalNotes: map['additionalNotes'] as String?,
       fatherName: map['father_name'] as String,
@@ -74,7 +74,7 @@ class NamePreference extends Equatable {
       country: '',
       gender: '',
       origin: '',
-      qualities: '',
+      qualities: [],
       style: [],
       additionalNotes: null,
       fatherName: '',

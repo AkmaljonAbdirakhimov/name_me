@@ -19,8 +19,6 @@ class MultipleChoiceOptions extends StatelessWidget {
       builder: (context, state) {
         final selectedAnswers = state.answers[question.type] ?? [];
 
-        print(selectedAnswers);
-
         return ListView.builder(
           itemCount: question.options.length,
           itemBuilder: (context, index) {
