@@ -19,6 +19,7 @@ Future<void> main() async {
       ],
       path: 'assets/translations',
       fallbackLocale: const Locale('uz'),
+      startLocale: const Locale('uz'),
       child: const MyApp(),
     ),
   );
