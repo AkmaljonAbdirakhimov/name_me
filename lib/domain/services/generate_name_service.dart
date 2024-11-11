@@ -17,7 +17,6 @@ class GenerateNamesService {
   ) async* {
     try {
       final prompt = _buildPrompt(preferences);
-      print(prompt);
       final content = [Content.text(prompt)];
 
       String buffer = '';
