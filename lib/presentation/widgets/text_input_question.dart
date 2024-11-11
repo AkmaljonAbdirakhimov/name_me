@@ -74,11 +74,10 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
                 return null;
               },
               onChanged: (value) {
-                if (_formKey.currentState!.validate()) {
-                  context
-                      .read<QuestionnaireBloc>()
-                      .add(QuestionnaireEvent.answerSelected(value.trim()));
-                }
+                _formKey.currentState!.validate();
+                context
+                    .read<QuestionnaireBloc>()
+                    .add(QuestionnaireEvent.answerSelected(value.trim()));
               },
             ),
           );
