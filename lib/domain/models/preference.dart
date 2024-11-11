@@ -4,7 +4,7 @@ class NamePreference extends Equatable {
   final String gender;
   final String origin;
   final String qualities;
-  final String style;
+  final List<String> style;
   final String country;
   final String? additionalNotes;
   final String fatherName;
@@ -26,7 +26,7 @@ class NamePreference extends Equatable {
     String? gender,
     String? origin,
     String? qualities,
-    String? style,
+    List<String>? style,
     String? additionalNotes,
     String? fatherName,
     String? motherName,
@@ -62,7 +62,7 @@ class NamePreference extends Equatable {
       gender: map['gender'] as String,
       origin: map['origin'] as String,
       qualities: map['qualities'] as String,
-      style: map['style'] as String,
+      style: List<String>.from(map['style']),
       additionalNotes: map['additionalNotes'] as String?,
       fatherName: map['father_name'] as String,
       motherName: map['mother_name'] as String,
@@ -75,7 +75,7 @@ class NamePreference extends Equatable {
       gender: '',
       origin: '',
       qualities: '',
-      style: '',
+      style: [],
       additionalNotes: null,
       fatherName: '',
       motherName: '',

@@ -1,8 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/domain.dart';
 import 'multiple_choice_options.dart';
+import 'progress_bar.dart';
+import 'question_card.dart';
 import 'text_input_question.dart';
 
 class QuestionView extends StatelessWidget {
@@ -22,31 +23,9 @@ class QuestionView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: progress,
-              backgroundColor: Colors.grey.shade100,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.pink.shade200),
-              minHeight: 8,
-            ),
-          ),
+          ProgressBar(progress: progress),
           const SizedBox(height: 20),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.pink[50],
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Text(
-              question.text.tr(context: context),
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-          ),
+          QuestionCard(question: question),
           const SizedBox(height: 20),
           Expanded(
             child:

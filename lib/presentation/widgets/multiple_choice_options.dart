@@ -15,35 +15,58 @@ class MultipleChoiceOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: question.options.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: ElevatedButton(
-            onPressed: () => context.read<QuestionnaireBloc>().add(
-                QuestionnaireEvent.answerSelected(question.options[index])),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black87,
-              padding: const EdgeInsets.all(20),
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: Colors.grey.shade200),
+    return BlocBuilder<QuestionnaireBloc, QuestionnaireState>(
+      builder: (context, state) {
+        final selectedAnswers = state.answers[question.type] ?? [];
+
+        print(selectedAnswers);
+
+        return ListView.builder(
+          itemCount: question.options.length,
+          itemBuilder: (context, index) {
+            final option = question.options[index];
+            final isSelected = selectedAnswers.contains(option);
+
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: ElevatedButton(
+                onPressed: () => context
+                    .read<QuestionnaireBloc>()
+                    .add(QuestionnaireEvent.answerSelected(option)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      isSelected ? Colors.pink.shade50 : Colors.white,
+                  foregroundColor: isSelected ? Colors.pink : Colors.black87,
+                  overlayColor: Colors.pink,
+                  padding: const EdgeInsets.all(20),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(color: Colors.grey.shade200),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        question.type == 'country'
+                            ? 'countries.$option'.tr(context: context)
+                            : option.tr(context: context),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight:
+                              isSelected ? FontWeight.w600 : FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    if (isSelected)
+                      const Icon(Icons.check_circle, color: Colors.pink),
+                  ],
+                ),
               ),
-            ),
-            child: Text(
-              question.type == 'country'
-                  ? 'countries.${question.options[index]}'.tr(context: context)
-                  : question.options[index].tr(context: context),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+            );
+          },
         );
       },
     );

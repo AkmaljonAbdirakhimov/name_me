@@ -6,13 +6,13 @@ import '../../application/application.dart';
 import '../presentation.dart';
 import '../widgets/app_title.dart';
 import '../widgets/language_selector.dart';
+import '../widgets/navigation_buttons.dart';
 
 class QuestionnaireScreen extends StatelessWidget {
   const QuestionnaireScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    
     return BlocProvider(
       create: (context) => GetIt.I<QuestionnaireBloc>(),
       child: Builder(builder: (context) {
@@ -61,6 +61,9 @@ class QuestionnaireScreen extends StatelessWidget {
               );
             },
           ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: const NavigationButtons(),
         );
       }),
     );

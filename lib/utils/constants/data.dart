@@ -5,12 +5,12 @@ class AppConstants {
     Question(
       text: 'father_name_question',
       type: 'father_name',
-      options: [], // Will handle this specially since it's text input
+      options: [],
     ),
     Question(
       text: 'mother_name_question',
       type: 'mother_name',
-      options: [], // Will handle this specially since it's text input
+      options: [],
     ),
     Question(
       text: 'gender_question',
@@ -45,6 +45,7 @@ class AppConstants {
         'quality_love',
         'quality_multiple',
       ],
+      isMultipleSelect: true,
     ),
     Question(
       text: 'style_question',
@@ -54,6 +55,7 @@ class AppConstants {
         'style_modern',
         'style_unique',
       ],
+      isMultipleSelect: true,
     ),
     Question(text: 'country_question', type: 'country', options: [
       "UZ",
