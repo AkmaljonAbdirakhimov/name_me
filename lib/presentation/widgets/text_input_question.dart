@@ -33,6 +33,8 @@ class _TextInputQuestionState extends State<TextInputQuestion> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<QuestionnaireBloc, QuestionnaireState>(
+        buildWhen: (previous, current) =>
+            previous.currentQuestionIndex != current.currentQuestionIndex,
         builder: (context, state) {
           _controller.text = state.currentAnswer ?? '';
           return Form(

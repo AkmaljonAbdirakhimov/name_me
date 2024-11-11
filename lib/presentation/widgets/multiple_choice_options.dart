@@ -16,6 +16,8 @@ class MultipleChoiceOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<QuestionnaireBloc, QuestionnaireState>(
+      buildWhen: (previous, current) =>
+          previous.currentQuestionIndex != current.currentQuestionIndex,
       builder: (context, state) {
         final selectedAnswers = state.answers[question.type] ?? [];
 

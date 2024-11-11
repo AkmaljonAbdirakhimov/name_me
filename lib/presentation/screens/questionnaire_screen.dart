@@ -39,6 +39,8 @@ class QuestionnaireScreen extends StatelessWidget {
             ],
           ),
           body: BlocConsumer<QuestionnaireBloc, QuestionnaireState>(
+            buildWhen: (previous, current) =>
+                previous.currentQuestionIndex != current.currentQuestionIndex,
             listener: (context, state) {
               if (state.currentPreference != null) {
                 Navigator.pushReplacement(context,
