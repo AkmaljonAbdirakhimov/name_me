@@ -45,6 +45,7 @@
     "next": "Next",
     "previous": "Previous",
     "generate": "Generate",
+    "generate_more": "Generate more",
     "countries": {
       "AE": "United Arab Emirates",
       "AF": "Afghanistan",

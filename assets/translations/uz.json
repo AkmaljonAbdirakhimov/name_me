@@ -1,5 +1,5 @@
 {
-    "app_title": "Chaqaloqga Ism Qo'ying",
+    "app_title": "Chaqaloqqa Ism Qo'ying",
     "father_name_question": "Otasining to'liq ismi nima?",
     "mother_name_question": "Onasining to'liq ismi nima?",
     "gender_question": "Kimga ism qidiryapsiz?",
@@ -45,6 +45,7 @@
     "next": "Keyingi",
     "previous": "Oldingi",
     "generate": "Yaratish",
+    "generate_more": "Ko'proq yaratish",
     "countries": {
       "AE": "Birlashgan Arab Amirliklari",
       "AF": "Afgʻoniston",

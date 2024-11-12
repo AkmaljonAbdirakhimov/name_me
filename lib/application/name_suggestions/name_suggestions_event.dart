@@ -3,6 +3,8 @@ part of 'name_suggestions_bloc.dart';
 sealed class NameSuggestionsEvent {
   const factory NameSuggestionsEvent.generateNames(
       NamePreference currentPreference) = _GenerateNames;
+  const factory NameSuggestionsEvent.generateMoreNames(
+      NamePreference currentPreference) = _GenerateMoreNames;
   const factory NameSuggestionsEvent.save(NameSuggestion suggestion) =
       _LikeName;
   const factory NameSuggestionsEvent.loadFavoriteNames() = _LoadFavoriteNames;
@@ -13,6 +15,11 @@ sealed class NameSuggestionsEvent {
 class _GenerateNames implements NameSuggestionsEvent {
   final NamePreference currentPreference;
   const _GenerateNames(this.currentPreference);
+}
+
+class _GenerateMoreNames implements NameSuggestionsEvent {
+  final NamePreference currentPreference;
+  const _GenerateMoreNames(this.currentPreference);
 }
 
 class _LikeName implements NameSuggestionsEvent {

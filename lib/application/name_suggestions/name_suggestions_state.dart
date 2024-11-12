@@ -1,6 +1,7 @@
 part of 'name_suggestions_bloc.dart';
 
 class NameSuggestionsState extends Equatable {
+  final NamePreference? currentPreference;
   final List<NameSuggestion> suggestions;
   final List<NameSuggestion> favoriteSuggestions;
   final bool isLoading;
@@ -8,6 +9,7 @@ class NameSuggestionsState extends Equatable {
   final String? error;
 
   const NameSuggestionsState({
+    this.currentPreference,
     required this.suggestions,
     required this.favoriteSuggestions,
     required this.isLoading,
@@ -16,6 +18,7 @@ class NameSuggestionsState extends Equatable {
   });
 
   NameSuggestionsState copyWith({
+    NamePreference? currentPreference,
     List<NameSuggestion>? suggestions,
     List<NameSuggestion>? favoriteSuggestions,
     bool? isLoading,
@@ -23,6 +26,7 @@ class NameSuggestionsState extends Equatable {
     String? error,
   }) {
     return NameSuggestionsState(
+      currentPreference: currentPreference ?? this.currentPreference,
       suggestions: suggestions ?? this.suggestions,
       favoriteSuggestions: favoriteSuggestions ?? this.favoriteSuggestions,
       isLoading: isLoading ?? this.isLoading,
@@ -40,6 +44,7 @@ class NameSuggestionsState extends Equatable {
 
   @override
   List<Object?> get props => [
+        currentPreference,
         suggestions,
         favoriteSuggestions,
         isLoading,

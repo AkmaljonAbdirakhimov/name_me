@@ -9,6 +9,7 @@ class NamePreference extends Equatable {
   final String? additionalNotes;
   final String fatherName;
   final String motherName;
+  final List<String> excludeNames;
 
   const NamePreference({
     required this.gender,
@@ -19,53 +20,64 @@ class NamePreference extends Equatable {
     this.additionalNotes,
     required this.fatherName,
     required this.motherName,
+    required this.excludeNames,
   });
 
   NamePreference copyWith({
-    String? country,
     String? gender,
     String? origin,
     List<String>? qualities,
     List<String>? style,
+    String? country,
     String? additionalNotes,
     String? fatherName,
     String? motherName,
+    List<String>? excludeNames,
   }) {
     return NamePreference(
-      country: country ?? this.country,
       gender: gender ?? this.gender,
       origin: origin ?? this.origin,
       qualities: qualities ?? this.qualities,
       style: style ?? this.style,
+      country: country ?? this.country,
       additionalNotes: additionalNotes ?? this.additionalNotes,
       fatherName: fatherName ?? this.fatherName,
       motherName: motherName ?? this.motherName,
+      excludeNames: excludeNames ?? this.excludeNames,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'country': country,
-      'gender': gender,
-      'origin': origin,
-      'qualities': qualities.join(", "),
-      'style': style.join(", "),
-      'additionalNotes': additionalNotes,
-      'fatherName': fatherName,
-      'motherName': motherName,
-    };
+    final result = <String, dynamic>{};
+
+    result.addAll({'gender': gender});
+    result.addAll({'origin': origin});
+    result.addAll({'qualities': qualities});
+    result.addAll({'style': style});
+    result.addAll({'country': country});
+    if (additionalNotes != null) {
+      result.addAll({'additionalNotes': additionalNotes});
+    }
+    result.addAll({'fatherName': fatherName});
+    result.addAll({'motherName': motherName});
+    result.addAll({'excludeNames': excludeNames});
+
+    return result;
   }
 
   factory NamePreference.fromMap(Map<String, dynamic> map) {
     return NamePreference(
-      country: map['country'] as String,
-      gender: map['gender'] as String,
-      origin: map['origin'] as String,
+      gender: map['gender'] ?? '',
+      origin: map['origin'] ?? '',
       qualities: List<String>.from(map['qualities']),
       style: List<String>.from(map['style']),
-      additionalNotes: map['additionalNotes'] as String?,
-      fatherName: map['father_name'] as String,
-      motherName: map['mother_name'] as String,
+      country: map['country'] ?? '',
+      additionalNotes: map['additionalNotes'],
+      fatherName: map['fatherName'] ?? '',
+      motherName: map['motherName'] ?? '',
+      excludeNames: map['excludeNames'] != null
+          ? List<String>.from(map['excludeNames'])
+          : [],
     );
   }
 
@@ -79,6 +91,7 @@ class NamePreference extends Equatable {
       additionalNotes: null,
       fatherName: '',
       motherName: '',
+      excludeNames: [],
     );
   }
 
@@ -91,6 +104,9 @@ class NamePreference extends Equatable {
       style,
       country,
       additionalNotes,
+      fatherName,
+      motherName,
+      excludeNames,
     ];
   }
 }

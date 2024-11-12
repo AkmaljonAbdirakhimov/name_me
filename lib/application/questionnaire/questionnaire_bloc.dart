@@ -46,8 +46,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         currentAnswer: event.answer,
       ));
     } catch (e, stack) {
-      // print(e);
-      // print(stack);
+      print(e);
+      print(stack);
     }
   }
 
@@ -71,8 +71,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         emit(state.copyWith(currentPreference: preference));
       }
     } catch (e, stack) {
-      // print(e);
-      // print(stack);
+      print(e);
+      print(stack);
     }
   }
 
@@ -93,8 +93,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         ));
       }
     } catch (e, stack) {
-      // print(e);
-      // print(stack);
+      print(e);
+      print(stack);
     }
   }
 }

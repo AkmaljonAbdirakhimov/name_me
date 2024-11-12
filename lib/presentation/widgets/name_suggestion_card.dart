@@ -25,12 +25,20 @@ class NameSuggestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lang = context.locale.languageCode;
-    final card = Card(
+    final card = Container(
       margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(
+      decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            spreadRadius: 2,
+            blurRadius: 10,
+            offset: const Offset(4, 8), // Controls the position of the shadow
+          ),
+        ],
       ),
-      elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(

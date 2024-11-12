@@ -21,6 +21,7 @@ class MultipleChoiceOptions extends StatelessWidget {
 
         return ListView.builder(
           itemCount: question.options.length,
+          padding: const EdgeInsets.only(bottom: 50),
           itemBuilder: (context, index) {
             final option = question.options[index];
             final isSelected = selectedAnswers.contains(option);

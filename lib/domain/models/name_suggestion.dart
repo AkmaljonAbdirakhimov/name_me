@@ -8,6 +8,7 @@ class NameSuggestion extends Equatable {
   final LocalizedString origin;
   final LocalizedString culturalContext;
   final LocalizedString familyConnection;
+  final Genders gender;
   final int? popularityScore;
   final bool isFavorite;
   const NameSuggestion({
@@ -16,6 +17,7 @@ class NameSuggestion extends Equatable {
     required this.origin,
     required this.culturalContext,
     required this.familyConnection,
+    required this.gender,
     this.popularityScore,
     this.isFavorite = false,
   });
@@ -26,6 +28,7 @@ class NameSuggestion extends Equatable {
     LocalizedString? origin,
     LocalizedString? culturalContext,
     LocalizedString? familyConnection,
+    Genders? gender,
     int? popularityScore,
     bool? isFavorite,
   }) {
@@ -35,6 +38,7 @@ class NameSuggestion extends Equatable {
       origin: origin ?? this.origin,
       culturalContext: culturalContext ?? this.culturalContext,
       familyConnection: familyConnection ?? this.familyConnection,
+      gender: gender ?? this.gender,
       popularityScore: popularityScore ?? this.popularityScore,
       isFavorite: isFavorite ?? this.isFavorite,
     );
@@ -47,6 +51,7 @@ class NameSuggestion extends Equatable {
       origin: LocalizedString.fromMap(map['origin']),
       culturalContext: LocalizedString.fromMap(map['culturalContext']),
       familyConnection: LocalizedString.fromMap(map['familyConnection']),
+      gender: Genders.values.firstWhere((g) => g.name == map['gender']),
       popularityScore: map['popularityScore']?.toInt(),
     );
   }
@@ -59,6 +64,7 @@ class NameSuggestion extends Equatable {
       origin,
       culturalContext,
       familyConnection,
+      gender,
       popularityScore,
     ];
   }

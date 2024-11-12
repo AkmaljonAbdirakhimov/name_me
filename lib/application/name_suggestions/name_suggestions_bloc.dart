@@ -13,6 +13,7 @@ class NameSuggestionsBloc
   NameSuggestionsBloc(this._nameRepository)
       : super(NameSuggestionsState.initial()) {
     on<_GenerateNames>(_onGenerateNames);
+    on<_GenerateMoreNames>(_onGenerateMoreNames);
     on<_LikeName>(_onLikeName);
     on<_LoadFavoriteNames>(_onLoadFavoriteNames);
     on<_RemoveFavoriteName>(_onRemoveFavoriteName);
@@ -23,6 +24,7 @@ class NameSuggestionsBloc
     Emitter<NameSuggestionsState> emit,
   ) async {
     emit(state.copyWith(
+      currentPreference: event.currentPreference,
       isLoading: true,
       isGenerating: true,
       suggestions: [],
@@ -53,6 +55,41 @@ class NameSuggestionsBloc
       emit(state.copyWith(
         error: e.toString(),
         isLoading: false,
+        isGenerating: false,
+      ));
+    }
+  }
+
+  Future<void> _onGenerateMoreNames(
+    _GenerateMoreNames event,
+    Emitter<NameSuggestionsState> emit,
+  ) async {
+    emit(state.copyWith(
+      isGenerating: true,
+      error: null,
+    ));
+
+    try {
+      await emit.onEach(
+          _nameRepository.streamNameSuggestions(event.currentPreference),
+          onData: (suggestion) {
+        emit(state.copyWith(
+          suggestions: [...state.suggestions, suggestion],
+          isGenerating: true,
+        ));
+      }, onError: (error, stack) {
+        emit(state.copyWith(
+          error: error.toString(),
+          isGenerating: false,
+        ));
+      });
+
+      emit(state.copyWith(
+        isGenerating: false,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        error: e.toString(),
         isGenerating: false,
       ));
     }

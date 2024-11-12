@@ -23,6 +23,9 @@ class FavoriteNameSuggestion extends HiveObject {
   final Map<String, String> familyConnection;
 
   @HiveField(5)
+  final Genders gender;
+
+  @HiveField(6)
   final int? popularityScore;
 
   FavoriteNameSuggestion({
@@ -31,6 +34,7 @@ class FavoriteNameSuggestion extends HiveObject {
     required this.origin,
     required this.culturalContext,
     required this.familyConnection,
+    required this.gender,
     this.popularityScore,
   });
 
@@ -41,6 +45,7 @@ class FavoriteNameSuggestion extends HiveObject {
       origin: suggestion.origin.values,
       culturalContext: suggestion.culturalContext.values,
       familyConnection: suggestion.familyConnection.values,
+      gender: suggestion.gender,
       popularityScore: suggestion.popularityScore,
     );
   }
@@ -52,6 +57,7 @@ class FavoriteNameSuggestion extends HiveObject {
       origin: LocalizedString.fromMap(origin),
       culturalContext: LocalizedString.fromMap(culturalContext),
       familyConnection: LocalizedString.fromMap(familyConnection),
+      gender: gender,
       popularityScore: popularityScore,
     );
   }

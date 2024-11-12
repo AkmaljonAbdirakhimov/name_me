@@ -23,14 +23,15 @@ class FavoriteNameSuggestionAdapter
       origin: (fields[2] as Map).cast<String, String>(),
       culturalContext: (fields[3] as Map).cast<String, String>(),
       familyConnection: (fields[4] as Map).cast<String, String>(),
-      popularityScore: fields[5] as int?,
+      gender: fields[5] as Genders,
+      popularityScore: fields[6] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, FavoriteNameSuggestion obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -42,6 +43,8 @@ class FavoriteNameSuggestionAdapter
       ..writeByte(4)
       ..write(obj.familyConnection)
       ..writeByte(5)
+      ..write(obj.gender)
+      ..writeByte(6)
       ..write(obj.popularityScore);
   }
 

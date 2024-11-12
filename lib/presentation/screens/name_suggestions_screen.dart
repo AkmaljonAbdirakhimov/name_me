@@ -141,12 +141,39 @@ class NameSuggestionsScreen extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   padding:
-                      const EdgeInsets.only(left: 16, right: 16, bottom: 80),
-                  itemCount: suggestions.length + (isGenerating ? 1 : 0),
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 180),
+                  itemCount: suggestions.length + 1,
                   itemBuilder: (context, index) {
                     if (index == suggestions.length && isGenerating) {
                       return const GeneratingCard();
                     }
+
+                    if (index == suggestions.length + (isGenerating ? 1 : 0)) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Center(
+                          child: TextButton(
+                            onPressed: () {
+                              if (state.currentPreference != null) {
+                                final currentPreference =
+                                    state.currentPreference!.copyWith(
+                                        excludeNames: state.suggestions
+                                            .map((s) => s.name.get('en'))
+                                            .toList());
+
+                                context
+                                    .read<NameSuggestionsBloc>()
+                                    .add(NameSuggestionsEvent.generateMoreNames(
+                                      currentPreference,
+                                    ));
+                              }
+                            },
+                            child: Text("generate_more".tr(context: context)),
+                          ),
+                        ),
+                      );
+                    }
+
                     final suggestion = suggestions[index];
                     return NameSuggestionCard(
                       suggestion: suggestion,

@@ -42,13 +42,13 @@ class GenerateNamesService {
             buffer = buffer.substring(endIndex + 1);
           }
         } catch (e) {
-          // print('Error parsing remaining buffer: $e');
+          print('Error parsing remaining buffer: $e');
           continue;
         }
       }
-    } catch (e) {
-      // print(e);
-      // print(stack);
+    } catch (e, stack) {
+      print(e);
+      print(stack);
       throw Exception('Failed to generate names: $e');
     }
   }
@@ -98,6 +98,7 @@ Format each name suggestion using exactly this structure:
       "ru": "string",
       "en": "string"
     },
+    gender: "string" // boy, girl or both
     "popularityScore": number
   }
 ]
@@ -113,6 +114,8 @@ ${preferences.additionalNotes != null ? '- Additional Notes: ${preferences.addit
 Parent Information:
 - Father's Name: ${preferences.fatherName}
 - Mother's Name: ${preferences.motherName}
+
+${preferences.excludeNames.isNotEmpty ? 'Please exclude the following names: ${preferences.excludeNames.join(", ")}' : ''}
 
 Important Constraints:
 1. Each name should respect ${preferences.country}'s cultural context
