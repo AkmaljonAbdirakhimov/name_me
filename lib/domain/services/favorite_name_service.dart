@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:name_me/domain/models/gender.dart';
 
 import '../domain.dart';
 import '../models/favorite_name_suggestion.dart';
@@ -8,12 +9,14 @@ class FavoriteNamesService {
   late Box<FavoriteNameSuggestion> _box;
 
   Future<void> init() async {
+    Hive.registerAdapter(GendersAdapter());
     Hive.registerAdapter(FavoriteNameSuggestionAdapter());
     _box = await Hive.openBox<FavoriteNameSuggestion>(_boxName);
   }
 
   Future<void> likeName(NameSuggestion suggestion) async {
-    final favoriteSuggestion = FavoriteNameSuggestion.fromNameSuggestion(suggestion);
+    final favoriteSuggestion =
+        FavoriteNameSuggestion.fromNameSuggestion(suggestion);
     await _box.add(favoriteSuggestion);
   }
 

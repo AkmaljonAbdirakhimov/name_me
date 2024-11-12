@@ -5,7 +5,7 @@ sealed class NameSuggestionsEvent {
       NamePreference currentPreference) = _GenerateNames;
   const factory NameSuggestionsEvent.generateMoreNames(
       NamePreference currentPreference) = _GenerateMoreNames;
-  const factory NameSuggestionsEvent.save(NameSuggestion suggestion) =
+  const factory NameSuggestionsEvent.like(NameSuggestion suggestion) =
       _LikeName;
   const factory NameSuggestionsEvent.loadFavoriteNames() = _LoadFavoriteNames;
   const factory NameSuggestionsEvent.removeFavoriteName(int index) =

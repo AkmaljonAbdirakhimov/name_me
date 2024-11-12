@@ -84,10 +84,9 @@ class NameSuggestionsScreen extends StatelessWidget {
                   const SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (ctx) {
-                        return const QuestionnaireScreen();
-                      }));
+                      context.read<NameSuggestionsBloc>().add(
+                          NameSuggestionsEvent.generateNames(
+                              state.currentPreference!));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.pink.shade200,
@@ -103,6 +102,7 @@ class NameSuggestionsScreen extends StatelessWidget {
                       tr('try_again', context: context),
                       style: const TextStyle(
                         fontSize: 16,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -141,7 +141,7 @@ class NameSuggestionsScreen extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   padding:
-                      const EdgeInsets.only(left: 16, right: 16, bottom: 180),
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 120),
                   itemCount: suggestions.length + 1,
                   itemBuilder: (context, index) {
                     if (index == suggestions.length && isGenerating) {
@@ -168,7 +168,13 @@ class NameSuggestionsScreen extends StatelessWidget {
                                     ));
                               }
                             },
-                            child: Text("generate_more".tr(context: context)),
+                            child: Text(
+                              "generate_more".tr(context: context),
+                              style: const TextStyle(
+                                color: Colors.pink,
+                                fontSize: 16,
+                              ),
+                            ),
                           ),
                         ),
                       );
@@ -182,7 +188,7 @@ class NameSuggestionsScreen extends StatelessWidget {
                       isFavorite: suggestion.isFavorite,
                       onSave: () {
                         context.read<NameSuggestionsBloc>().add(
-                              NameSuggestionsEvent.save(suggestions[index]),
+                              NameSuggestionsEvent.like(suggestions[index]),
                             );
                       },
                     );

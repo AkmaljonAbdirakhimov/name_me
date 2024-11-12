@@ -113,6 +113,7 @@ class NameSuggestionsBloc
         favoriteSuggestions: favoriteSuggestions,
       ));
     } catch (e) {
+      print(e);
       emit(state.copyWith(error: e.toString()));
     }
   }

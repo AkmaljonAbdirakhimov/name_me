@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:google_generative_ai/google_generative_ai.dart';
 
@@ -17,6 +18,7 @@ class GenerateNamesService {
   ) async* {
     try {
       final prompt = _buildPrompt(preferences);
+      log(prompt);
       final content = [Content.text(prompt)];
 
       String buffer = '';
@@ -42,13 +44,13 @@ class GenerateNamesService {
             buffer = buffer.substring(endIndex + 1);
           }
         } catch (e) {
-          print('Error parsing remaining buffer: $e');
+          log('Error parsing remaining buffer: $e');
           continue;
         }
       }
     } catch (e, stack) {
-      print(e);
-      print(stack);
+      log(e.toString());
+      log(stack.toString());
       throw Exception('Failed to generate names: $e');
     }
   }
@@ -122,7 +124,7 @@ Important Constraints:
 2. Names should have meaningful connections to parents' names where possible
 3. Consider local naming traditions
 4. Popularity score must be between 0-100
-5. All translations must be provided in Uzbek (uz), Russian (ru), and English (en)
+5. All translations must be provided in Uzbek (uz) NOT CYRILLIC, Russian (ru), and English (en)
 
 Remember: Give each name suggestion ONLY with the JSON array in total 5 names. No additional text.
 ''';

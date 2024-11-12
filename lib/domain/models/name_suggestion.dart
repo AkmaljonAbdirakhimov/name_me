@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../utils/utils.dart';
+import 'gender.dart';
 
 class NameSuggestion extends Equatable {
   final LocalizedString name;

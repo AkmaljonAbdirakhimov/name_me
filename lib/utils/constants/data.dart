@@ -1,7 +1,5 @@
 import '../../domain/domain.dart';
 
-enum Genders { boy, girl, both }
-
 class AppConstants {
   static const questions = [
     Question(

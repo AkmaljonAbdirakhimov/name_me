@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 
 import '../../utils/utils.dart';
+import 'gender.dart';
 import 'name_suggestion.dart';
 
 part 'favorite_name_suggestion.g.dart';
