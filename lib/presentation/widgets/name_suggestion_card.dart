@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/domain.dart';
+import '../../domain/models/gender.dart';
 import 'info_row.dart';
 
 class NameSuggestionCard extends StatelessWidget {
@@ -21,6 +22,17 @@ class NameSuggestionCard extends StatelessWidget {
     this.onRemove,
     this.isFavorite = false,
   });
+
+  MaterialColor get _getColor {
+    return Colors.pink;
+    // if (suggestion.gender == Genders.boy) {
+    //   return Colors.blue;
+    // } else if (suggestion.gender == Genders.girl) {
+    //   return Colors.pink;
+    // } else {
+    //   return Colors.lightGreen;
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +80,10 @@ class NameSuggestionCard extends StatelessWidget {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.pink.shade50,
+                            color: _getColor.shade50,
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: Colors.pink.shade200,
+                              color: _getColor.shade200,
                               width: 1,
                             ),
                           ),
@@ -81,13 +93,13 @@ class NameSuggestionCard extends StatelessWidget {
                               Icon(
                                 Icons.trending_up,
                                 size: 16,
-                                color: Colors.pink.shade400,
+                                color: _getColor.shade400,
                               ),
                               const SizedBox(width: 4),
                               Text(
                                 '${suggestion.popularityScore?.round() ?? 0}%',
                                 style: TextStyle(
-                                  color: Colors.pink.shade400,
+                                  color: _getColor.shade400,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -100,7 +112,7 @@ class NameSuggestionCard extends StatelessWidget {
                       IconButton(
                         icon: Icon(
                           isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: Colors.pink,
+                          color: _getColor,
                         ),
                         onPressed: isFavorite ? onRemove : onSave,
                       ),
