@@ -46,6 +46,11 @@
     "previous": "Previous",
     "generate": "Generate",
     "generate_more": "Generate more",
+    "try_later": "Please try again later",
+    "did_you_know": "Did you know?",
+    "daily_limit_reached": "Daily Limit Reached",
+    "daily_limit_reached_message": "You have reached the daily limit for generating names. Please try again tomorrow.",
+    "daily_limit_reached_button": "Try Again",
     "countries": {
       "AE": "United Arab Emirates",
       "AF": "Afghanistan",
@@ -105,5 +110,27 @@
       "UZ": "Uzbekistan",
       "TM": "Turkmenistan",
       "TJ": "Tajikistan"
+    },
+    "tips": {
+      "1": "Maintaining a consistent feeding and sleep schedule supports healthy growth.",
+      "2": "Speaking gently and lovingly helps calm your baby.",
+      "3": "Tummy time helps strengthen your baby’s muscles.",
+      "4": "Regular pediatric check-ups are important for monitoring health.",
+      "5": "Breastfeeding or formula feeding provides essential nutrients.",
+      "6": "Creating a comfortable sleep environment positively affects development.",
+      "7": "Hugging, caressing, and showing affection supports emotional growth.",
+      "8": "A safe environment allows independent exploration.",
+      "9": "Colorful toys help develop abilities and fine motor skills.",
+      "10": "Reading books and singing songs aid language development.",
+      "11": "Babies learn new skills through repeated practice.",
+      "12": "Gentle massage and skin-to-skin contact strengthen emotional bonds.",
+      "13": "Babies observe facial expressions to understand emotions.",
+      "14": "Different sounds and music foster auditory skills.",
+      "15": "A balanced diet lays the foundation for healthy development.",
+      "16": "Playing with your baby improves social and emotional skills.",
+      "17": "Allowing simple tasks boosts their sense of independence.",
+      "18": "Daily routines and rituals create feelings of security.",
+      "19": "Describing objects, naming colors and shapes enhances language skills.",
+      "20": "Love, attention, and time are the best gifts you can give."
     }
   }

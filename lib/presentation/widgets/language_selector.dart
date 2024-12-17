@@ -1,5 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../application/app_style/app_style_bloc.dart';
 
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({super.key});
@@ -8,9 +11,14 @@ class LanguageSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopupMenuButton<Locale>(
       color: Colors.white,
-      icon: Icon(
-        Icons.language,
-        color: Colors.pink[300],
+      icon: BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+        selector: (state) => state.appColor,
+        builder: (context, appColor) {
+          return Icon(
+            Icons.language,
+            color: appColor.shade300,
+          );
+        },
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),

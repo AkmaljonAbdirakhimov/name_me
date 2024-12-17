@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../application/app_style/app_style_bloc.dart';
 import '../../domain/domain.dart';
-import '../../domain/models/gender.dart';
 import 'info_row.dart';
 
 class NameSuggestionCard extends StatelessWidget {
@@ -22,17 +23,6 @@ class NameSuggestionCard extends StatelessWidget {
     this.onRemove,
     this.isFavorite = false,
   });
-
-  MaterialColor get _getColor {
-    return Colors.pink;
-    // if (suggestion.gender == Genders.boy) {
-    //   return Colors.blue;
-    // } else if (suggestion.gender == Genders.girl) {
-    //   return Colors.pink;
-    // } else {
-    //   return Colors.lightGreen;
-    // }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,55 +59,62 @@ class NameSuggestionCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    if (suggestion.popularityScore != null)
-                      Tooltip(
-                        message: 'popularity_tooltip'.tr(context: context),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: _getColor.shade50,
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: _getColor.shade200,
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.trending_up,
-                                size: 16,
-                                color: _getColor.shade400,
+                BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+                  selector: (state) => state.appColor,
+                  builder: (context, appColor) {
+                    return Row(
+                      children: [
+                        if (suggestion.popularityScore != null)
+                          Tooltip(
+                            message: 'popularity_tooltip'.tr(context: context),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
                               ),
-                              const SizedBox(width: 4),
-                              Text(
-                                '${suggestion.popularityScore?.round() ?? 0}%',
-                                style: TextStyle(
-                                  color: _getColor.shade400,
-                                  fontWeight: FontWeight.bold,
+                              decoration: BoxDecoration(
+                                color: appColor.shade50,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: appColor.shade200,
+                                  width: 1,
                                 ),
                               ),
-                            ],
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.trending_up,
+                                    size: 16,
+                                    color: appColor.shade400,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '${suggestion.popularityScore?.round() ?? 0}%',
+                                    style: TextStyle(
+                                      color: appColor.shade400,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    if (showSaveButton) ...[
-                      const SizedBox(width: 8),
-                      IconButton(
-                        icon: Icon(
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: _getColor,
-                        ),
-                        onPressed: isFavorite ? onRemove : onSave,
-                      ),
-                    ],
-                  ],
+                        if (showSaveButton) ...[
+                          const SizedBox(width: 8),
+                          IconButton(
+                            icon: Icon(
+                              isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: appColor,
+                            ),
+                            onPressed: isFavorite ? onRemove : onSave,
+                          ),
+                        ],
+                      ],
+                    );
+                  },
                 ),
               ],
             ),

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:name_me/utils/utils.dart';
 
+import '../../application/app_usage/app_usage_bloc.dart';
 import '../../application/application.dart';
+import '../../utils/helpers/dialogs.dart';
 import '../presentation.dart';
 import '../widgets/app_title.dart';
 import '../widgets/language_selector.dart';
@@ -43,16 +46,25 @@ class QuestionnaireScreen extends StatelessWidget {
                 previous.currentQuestionIndex != current.currentQuestionIndex,
             listener: (context, state) {
               if (state.currentPreference != null) {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (ctx) {
-                  return BlocProvider(
-                    create: (context) => GetIt.I<NameSuggestionsBloc>()
-                      ..add(NameSuggestionsEvent.generateNames(
-                          state.currentPreference!))
-                      ..add(const NameSuggestionsEvent.loadFavoriteNames()),
-                    child: const NameSuggestionsScreen(),
-                  );
-                }));
+                final appUsageBloc = context.read<AppUsageBloc>();
+                final appUsage = appUsageBloc.state.appUsage;
+                if (appUsage == null ||
+                    appUsage.count < AppConstants.firstTimeUsageCount) {
+                  appUsageBloc.add(IncrementAppUsageEvent());
+
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (ctx) {
+                    return BlocProvider(
+                      create: (context) => GetIt.I<NameSuggestionsBloc>()
+                        ..add(NameSuggestionsEvent.generateNames(
+                            state.currentPreference!))
+                        ..add(const NameSuggestionsEvent.loadFavoriteNames()),
+                      child: const NameSuggestionsScreen(),
+                    );
+                  }));
+                } else {
+                  AppDialogs.showDailyLimitDialog(context);
+                }
               }
             },
             builder: (context, state) {

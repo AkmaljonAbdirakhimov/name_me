@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "591145762669",
+    "project_id": "uz-name-baby",
+    "storage_bucket": "uz-name-baby.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591145762669:android:e33bb6cda4dce32bd4e464",
+        "android_client_info": {
+          "package_name": "uz.name.ba"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcAeQASaNegX39oXGmRdtIM8WDXoEFxts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

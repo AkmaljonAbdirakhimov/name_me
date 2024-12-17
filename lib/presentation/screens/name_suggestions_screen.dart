@@ -1,9 +1,15 @@
+import 'dart:math';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../application/app_usage/app_usage_bloc.dart';
 import '../../application/application.dart';
+import '../../application/app_style/app_style_bloc.dart';
 import '../../domain/domain.dart';
+import '../../utils/constants/data.dart';
+import '../../utils/helpers/dialogs.dart';
 import '../presentation.dart';
 import '../widgets/app_title.dart';
 import '../widgets/generating_card.dart';
@@ -14,6 +20,13 @@ class NameSuggestionsScreen extends StatelessWidget {
   const NameSuggestionsScreen({
     super.key,
   });
+
+  String _getRandomTip(BuildContext context) {
+    final random = Random();
+    final currentTipIndex = random.nextInt(20);
+    final tip = tr("tips.$currentTipIndex");
+    return tip;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +45,14 @@ class NameSuggestionsScreen extends StatelessWidget {
                 );
               }));
             },
-            icon: const Icon(
-              Icons.favorite,
-              color: Colors.pink,
+            icon: BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+              selector: (state) => state.appColor,
+              builder: (context, appColor) {
+                return const Icon(
+                  Icons.favorite,
+                  color: Colors.pink,
+                );
+              },
             ),
           )
         ],
@@ -43,35 +61,83 @@ class NameSuggestionsScreen extends StatelessWidget {
         builder: (context, state) {
           if (state.isLoading && state.suggestions.isEmpty) {
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(Colors.pink.shade200),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    tr('loading', context: context),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
+              child: BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+                selector: (state) => state.appColor,
+                builder: (context, appColor) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          appColor.shade200,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        tr('loading', context: context),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 24),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: appColor.shade50,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: appColor.shade100),
+                        ),
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.lightbulb_outline,
+                              color: appColor.shade300,
+                              size: 32,
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              'did_you_know'.tr(context: context),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: appColor.shade700,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              _getRandomTip(context),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             );
           }
 
-          if (state.error != null) {
+          if (state.error != null && state.error != "try_later") {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.error_outline,
-                    size: 48,
-                    color: Colors.pink.shade200,
+                  BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+                    selector: (state) => state.appColor,
+                    builder: (context, appColor) {
+                      return Icon(
+                        Icons.error_outline,
+                        size: 48,
+                        color: appColor.shade200,
+                      );
+                    },
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -82,30 +148,35 @@ class NameSuggestionsScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<NameSuggestionsBloc>().add(
-                          NameSuggestionsEvent.generateNames(
-                              state.currentPreference!));
+                  BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+                    selector: (state) => state.appColor,
+                    builder: (context, appColor) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          context.read<NameSuggestionsBloc>().add(
+                              NameSuggestionsEvent.generateNames(
+                                  state.currentPreference!));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: appColor.shade200,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                            vertical: 16,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          tr('try_again', context: context),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      );
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pink.shade200,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 16,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: Text(
-                      tr('try_again', context: context),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                   ),
                 ],
               ),
@@ -118,25 +189,30 @@ class NameSuggestionsScreen extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                margin:
-                    const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.pink[50],
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Center(
-                  child: Text(
-                    'suggested_names'.tr(context: context),
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+              BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+                selector: (state) => state.appColor,
+                builder: (context, appColor) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 24, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: appColor[50],
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                  ),
-                ),
+                    child: Center(
+                      child: Text(
+                        'suggested_names'.tr(context: context),
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
               Expanded(
                 child: ListView.builder(
@@ -155,25 +231,46 @@ class NameSuggestionsScreen extends StatelessWidget {
                           child: TextButton(
                             onPressed: () {
                               if (state.currentPreference != null) {
-                                final currentPreference =
-                                    state.currentPreference!.copyWith(
-                                        excludeNames: state.suggestions
-                                            .map((s) => s.name.get('en'))
-                                            .toList());
+                                final appUsageBloc =
+                                    context.read<AppUsageBloc>();
+                                final appUsage = appUsageBloc.state.appUsage;
 
-                                context
-                                    .read<NameSuggestionsBloc>()
-                                    .add(NameSuggestionsEvent.generateMoreNames(
-                                      currentPreference,
-                                    ));
+                                if (appUsage == null ||
+                                    appUsage.count <
+                                        AppConstants.firstTimeUsageCount) {
+                                  appUsageBloc.add(IncrementAppUsageEvent());
+
+                                  final currentPreference =
+                                      state.currentPreference!.copyWith(
+                                          excludeNames: state.suggestions
+                                              .map((s) => s.name.get('en'))
+                                              .toList());
+
+                                  context.read<NameSuggestionsBloc>().add(
+                                        NameSuggestionsEvent.generateMoreNames(
+                                          currentPreference,
+                                        ),
+                                      );
+                                } else {
+                                  AppDialogs.showDailyLimitDialog(context);
+                                }
                               }
                             },
-                            child: Text(
-                              "generate_more".tr(context: context),
-                              style: const TextStyle(
-                                color: Colors.pink,
-                                fontSize: 16,
-                              ),
+                            child: BlocSelector<AppStyleBloc, AppStyleState,
+                                MaterialColor>(
+                              selector: (state) => state.appColor,
+                              builder: (context, appColor) {
+                                return Text(
+                                  (state.error != null
+                                          ? "try_later"
+                                          : "generate_more")
+                                      .tr(context: context),
+                                  style: TextStyle(
+                                    color: appColor,
+                                    fontSize: 16,
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -206,24 +303,29 @@ class NameSuggestionsScreen extends StatelessWidget {
         builder: (context, suggestions) {
           return Visibility(
             visible: suggestions.isNotEmpty,
-            child: FloatingActionButton.extended(
-              onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (ctx) {
-                  return const QuestionnaireScreen();
-                }));
+            child: BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+              selector: (state) => state.appColor,
+              builder: (context, appColor) {
+                return FloatingActionButton.extended(
+                  onPressed: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (ctx) {
+                      return const QuestionnaireScreen();
+                    }));
+                  },
+                  backgroundColor: appColor.shade200,
+                  foregroundColor: Colors.white,
+                  elevation: 1,
+                  icon: const Icon(Icons.refresh_rounded),
+                  label: Text(
+                    'start_over'.tr(context: context),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
               },
-              backgroundColor: Colors.pink.shade200,
-              foregroundColor: Colors.white,
-              elevation: 1,
-              icon: const Icon(Icons.refresh_rounded),
-              label: Text(
-                'start_over'.tr(context: context),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
             ),
           );
         },

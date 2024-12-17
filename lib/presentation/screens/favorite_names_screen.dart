@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/application.dart';
+import '../../application/app_style/app_style_bloc.dart';
 import '../presentation.dart';
 import '../widgets/app_title.dart';
 import '../widgets/language_selector.dart';
@@ -26,49 +27,54 @@ class FavoriteNamesScreen extends StatelessWidget {
         builder: (context, state) {
           if (state.error != null) {
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.error_outline,
-                    size: 48,
-                    color: Colors.pink.shade200,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    tr('error_generating', context: context),
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (ctx) {
-                        return const QuestionnaireScreen();
-                      }));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pink.shade200,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 16,
+              child: BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+                selector: (state) => state.appColor,
+                builder: (context, appColor) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.error_outline,
+                        size: 48,
+                        color: appColor.shade200,
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                      const SizedBox(height: 16),
+                      Text(
+                        tr('error_generating', context: context),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.black87,
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      tr('try_again', context: context),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                      const SizedBox(height: 24),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (ctx) {
+                            return const QuestionnaireScreen();
+                          }));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: appColor.shade200,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                            vertical: 16,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          tr('try_again', context: context),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ],
+                    ],
+                  );
+                },
               ),
             );
           }
@@ -90,25 +96,30 @@ class FavoriteNamesScreen extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                margin:
-                    const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.pink[50],
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Center(
-                  child: Text(
-                    'favorite_names'.tr(context: context),
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+              BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+                selector: (state) => state.appColor,
+                builder: (context, appColor) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 24, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: appColor.shade50,
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                  ),
-                ),
+                    child: Center(
+                      child: Text(
+                        'favorite_names'.tr(context: context),
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
               Expanded(
                 child: ListView.builder(

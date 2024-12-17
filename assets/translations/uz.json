@@ -46,6 +46,11 @@
     "previous": "Oldingi",
     "generate": "Yaratish",
     "generate_more": "Ko'proq yaratish",
+    "try_later": "Keyinroq urinib ko'ring",
+    "did_you_know": "Buni bilarmidingiz?",
+    "daily_limit_reached": "Kunlik limit tugadi",
+    "daily_limit_reached_message": "Sizda ismlarni yaratish uchun kunlik limit tugadi. Keyinroq urinib ko'ring.",
+    "daily_limit_reached_button": "Qayta urinish",
     "countries": {
       "AE": "Birlashgan Arab Amirliklari",
       "AF": "Afgʻoniston",
@@ -105,5 +110,27 @@
       "UZ": "Oʻzbekiston",
       "TM": "Turkmaniston",
       "TJ": "Tojikiston"
+    },
+    "tips": {
+      "1": "Doimiy ovqatlantirish va uxlash rejimi bolangizning sog‘lom o‘sishiga yordam beradi.",
+      "2": "Bolangiz bilan muloyim va mehribon ohangda gaplashish uni xotirjam qiladi.",
+      "3": "Qorin ustida yotish mashqlari bolangizning mushaklarini mustahkamlaydi.",
+      "4": "Muntazam shifokor ko‘riklari bolangizning sog‘lig‘ini kuzatishda muhimdir.",
+      "5": "Emizish yoki sun’iy ozuqa bilan ta’minlashda bolaga zarur ozuqa moddalarini yetkazish muhim.",
+      "6": "Bolangizga sifatli uyqu sharoitini yaratish rivojlanishga ijobiy ta’sir qiladi.",
+      "7": "Bolani quchoqlash, silash va mehribonlik ko‘rsatish uning hissiy rivojini qo‘llab-quvvatlaydi.",
+      "8": "Atrof-muhitni xavfsiz qilish bolangizning mustaqil o‘rganishiga imkon beradi.",
+      "9": "Bolalar rang-barang o‘yinchoqlar bilan o‘ynash orqali o‘z qobiliyatlarini rivojlantirishadi.",
+      "10": "Bolangizning nutqini rivojlantirish uchun kitob o‘qish va qo‘shiqlar kuylash yordam beradi.",
+      "11": "Bolalar ko‘p marta takrorlash orqali yangi ko‘nikmalarni o‘rganishadi.",
+      "12": "Yengil massaj va teri bilan teri kontakti bolangizning hissiy mustahkamligini oshiradi.",
+      "13": "Bolalar boshqalarning his-tuyg‘ularini o‘rganish uchun yuz ifodalarini kuzatishadi.",
+      "14": "Turli ovozlar va musiqa bolaning eshitish qobiliyatini rivojlantiradi.",
+      "15": "Muvozanatli ovqatlanish bolangizning sog‘lom o‘sishiga zamin yaratadi.",
+      "16": "Bola bilan o‘ynash orqali uning ijtimoiy va hissiy ko‘nikmalari mustahkamlanadi.",
+      "17": "Oddiy vazifalarni bajarishga imkon berish bolaning mustaqillik hissini oshiradi.",
+      "18": "Bolangiz bilan kunlik odatlar va marosimlar ishonch hissini paydo qiladi.",
+      "19": "Atrofidagi narsalarni tushuntirish, rang va shakllarni nomlash bolaning nutqini rivojlantiradi.",
+      "20": "Bolangizga sevgi, diqqat va vaqt ajratish eng yaxshi sovg‘a hisoblanadi."
     }
   }

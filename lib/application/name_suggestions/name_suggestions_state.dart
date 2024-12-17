@@ -31,7 +31,7 @@ class NameSuggestionsState extends Equatable {
       favoriteSuggestions: favoriteSuggestions ?? this.favoriteSuggestions,
       isLoading: isLoading ?? this.isLoading,
       isGenerating: isGenerating ?? this.isGenerating,
-      error: error,
+      error: error ?? this.error,
     );
   }
 

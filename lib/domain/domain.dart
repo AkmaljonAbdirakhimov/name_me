@@ -10,3 +10,4 @@ export 'repositories/name_repository_impl.dart';
 // SERVICES
 export 'services/generate_name_service.dart';
 export 'services/favorite_name_service.dart';
+export 'services/app_usage_service.dart';

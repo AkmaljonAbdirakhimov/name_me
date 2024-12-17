@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/domain.dart';
@@ -46,8 +47,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         currentAnswer: event.answer,
       ));
     } catch (e, stack) {
-      // print(e);
-      // print(stack);
+      debugPrint(e.toString());
+      debugPrint(stack.toString());
     }
   }
 
@@ -71,8 +72,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         emit(state.copyWith(currentPreference: preference));
       }
     } catch (e, stack) {
-      // print(e);
-      // print(stack);
+      debugPrint(e.toString());
+      debugPrint(stack.toString());
     }
   }
 
@@ -93,8 +94,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         ));
       }
     } catch (e, stack) {
-      // print(e);
-      // print(stack);
+      debugPrint(e.toString());
+      debugPrint(stack.toString());
     }
   }
 }

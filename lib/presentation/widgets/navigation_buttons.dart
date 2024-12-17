@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/application.dart';
+import '../../application/app_style/app_style_bloc.dart';
 
 class NavigationButtons extends StatelessWidget {
   const NavigationButtons({super.key});
@@ -51,30 +52,35 @@ class NavigationButtons extends StatelessWidget {
 
               // Next/Finish Button
               Expanded(
-                child: ElevatedButton(
-                  onPressed: hasAnswer
-                      ? () => context
-                          .read<QuestionnaireBloc>()
-                          .add(const QuestionnaireEvent.nextQuestion())
-                      : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.pink.shade200,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.all(16),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    isLastQuestion
-                        ? 'generate'.tr(context: context)
-                        : 'next'.tr(context: context),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                child: BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+                  selector: (state) => state.appColor,
+                  builder: (context, appColor) {
+                    return ElevatedButton(
+                      onPressed: hasAnswer
+                          ? () => context
+                              .read<QuestionnaireBloc>()
+                              .add(const QuestionnaireEvent.nextQuestion())
+                          : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: appColor.shade200,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.all(16),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        isLastQuestion
+                            ? 'generate'.tr(context: context)
+                            : 'next'.tr(context: context),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

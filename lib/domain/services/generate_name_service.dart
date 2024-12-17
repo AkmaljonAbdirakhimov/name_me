@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:firebase_vertexai/firebase_vertexai.dart';
+import 'package:flutter/material.dart';
 
 import '../../utils/utils.dart';
 import '../domain.dart';
@@ -18,7 +19,6 @@ class GenerateNamesService {
   ) async* {
     try {
       final prompt = _buildPrompt(preferences);
-      log(prompt);
       final content = [Content.text(prompt)];
 
       String buffer = '';
@@ -49,9 +49,10 @@ class GenerateNamesService {
         }
       }
     } catch (e, stack) {
-      log(e.toString());
-      log(stack.toString());
-      throw Exception('Failed to generate names: $e');
+      debugPrint(e.toString());
+      debugPrint(stack.toString());
+
+      throw "try_later";
     }
   }
 
@@ -73,6 +74,35 @@ Each response must be a valid, complete JSON array that can be parsed independen
 Do not include any explanatory text before or after the JSON.
 
 Format each name suggestion using exactly this structure:
+${_jsonTemplate()}
+
+Consider these requirements when generating names:
+- Gender: ${AppConstants.namePreferences[preferences.gender]}
+- Origin: ${AppConstants.namePreferences[preferences.origin]}
+- Qualities: $qualities
+- Style: $styles
+- Country Context: ${preferences.country}
+${preferences.additionalNotes != null ? '- Additional Notes: ${preferences.additionalNotes}' : ''}
+
+Parent Information:
+- Father's Name: ${preferences.fatherName}
+- Mother's Name: ${preferences.motherName}
+
+${preferences.excludeNames.isNotEmpty ? 'Please exclude the following names: ${preferences.excludeNames.join(", ")}' : ''}
+
+Important Constraints:
+1. Each name should respect ${preferences.country}'s cultural context
+2. Names should have meaningful connections to parents' names where possible
+3. Consider local naming traditions
+4. Popularity score must be between 0-100
+5. All translations must be provided in Uzbek (uz) NOT CYRILLIC, Russian (ru), and English (en)
+
+Remember: Give each name suggestion ONLY with the JSON array in total 5 names. No additional text.
+''';
+  }
+
+  String _jsonTemplate() {
+    return '''
 [
   {
     "name": {
@@ -104,29 +134,6 @@ Format each name suggestion using exactly this structure:
     "popularityScore": number
   }
 ]
-
-Consider these requirements when generating names:
-- Gender: ${AppConstants.namePreferences[preferences.gender]}
-- Origin: ${AppConstants.namePreferences[preferences.origin]}
-- Qualities: $qualities
-- Style: $styles
-- Country Context: ${preferences.country}
-${preferences.additionalNotes != null ? '- Additional Notes: ${preferences.additionalNotes}' : ''}
-
-Parent Information:
-- Father's Name: ${preferences.fatherName}
-- Mother's Name: ${preferences.motherName}
-
-${preferences.excludeNames.isNotEmpty ? 'Please exclude the following names: ${preferences.excludeNames.join(", ")}' : ''}
-
-Important Constraints:
-1. Each name should respect ${preferences.country}'s cultural context
-2. Names should have meaningful connections to parents' names where possible
-3. Consider local naming traditions
-4. Popularity score must be between 0-100
-5. All translations must be provided in Uzbek (uz) NOT CYRILLIC, Russian (ru), and English (en)
-
-Remember: Give each name suggestion ONLY with the JSON array in total 5 names. No additional text.
 ''';
   }
 }

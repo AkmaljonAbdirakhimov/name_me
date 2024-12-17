@@ -201,4 +201,6 @@ class AppConstants {
     "TM": "Turkmenistan",
     "TJ": "Tajikistan"
   };
+
+  static const int firstTimeUsageCount = 1;
 }

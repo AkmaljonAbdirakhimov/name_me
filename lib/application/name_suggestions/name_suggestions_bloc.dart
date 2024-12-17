@@ -80,6 +80,7 @@ class NameSuggestionsBloc
       }, onError: (error, stack) {
         emit(state.copyWith(
           error: error.toString(),
+          isLoading: false,
           isGenerating: false,
         ));
       });

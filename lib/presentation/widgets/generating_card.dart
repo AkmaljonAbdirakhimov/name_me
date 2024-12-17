@@ -1,5 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../application/app_style/app_style_bloc.dart';
 
 class GeneratingCard extends StatelessWidget {
   const GeneratingCard({super.key});
@@ -24,12 +27,18 @@ class GeneratingCard extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Row(
           children: [
-            SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.pink.shade200),
-              ),
+            BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+              selector: (state) => state.appColor,
+              builder: (context, appColor) {
+                return SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(appColor.shade200),
+                  ),
+                );
+              },
             ),
             const SizedBox(width: 16),
             Expanded(
