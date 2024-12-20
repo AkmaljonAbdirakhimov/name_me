@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,13 +18,6 @@ class NameSuggestionsScreen extends StatelessWidget {
   const NameSuggestionsScreen({
     super.key,
   });
-
-  String _getRandomTip(BuildContext context) {
-    final random = Random();
-    final currentTipIndex = random.nextInt(20);
-    final tip = tr("tips.$currentTipIndex");
-    return tip;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +48,17 @@ class NameSuggestionsScreen extends StatelessWidget {
           )
         ],
       ),
-      body: BlocBuilder<NameSuggestionsBloc, NameSuggestionsState>(
+      body: BlocConsumer<NameSuggestionsBloc, NameSuggestionsState>(
+        listener: (context, state) {
+          if (state.isLoading && state.suggestions.isEmpty) {
+            AppDialogs.showParentingTipDialog(context);
+            Future.delayed(const Duration(seconds: 10), () {
+              if (context.mounted) {
+                AppDialogs.closeParentingTipDialog(context);
+              }
+            });
+          }
+        },
         builder: (context, state) {
           if (state.isLoading && state.suggestions.isEmpty) {
             return Center(
@@ -74,47 +75,10 @@ class NameSuggestionsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        tr('loading', context: context),
+                        "${tr('loading', context: context)}...",
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.grey,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: appColor.shade50,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: appColor.shade100),
-                        ),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.lightbulb_outline,
-                              color: appColor.shade300,
-                              size: 32,
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              'did_you_know'.tr(context: context),
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: appColor.shade700,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              _getRandomTip(context),
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
                     ],

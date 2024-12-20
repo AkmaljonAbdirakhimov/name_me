@@ -3,6 +3,7 @@ import 'package:firebase_vertexai/firebase_vertexai.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'application/app_usage/app_usage_bloc.dart';
 import 'application/application.dart';
 import 'application/app_style/app_style_bloc.dart';
 import 'domain/domain.dart';
@@ -63,5 +64,9 @@ Future<void> setupDependencies() async {
 
   getIt.registerFactory(
     () => NameSuggestionsBloc(getIt<NameRepository>()),
+  );
+
+  getIt.registerSingleton(
+    AppUsageBloc(appUsageRepository: getIt<AppUsageRepository>()),
   );
 }

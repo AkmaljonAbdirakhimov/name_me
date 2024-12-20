@@ -52,7 +52,8 @@ class NameSuggestion extends Equatable {
       origin: LocalizedString.fromMap(map['origin']),
       culturalContext: LocalizedString.fromMap(map['culturalContext']),
       familyConnection: LocalizedString.fromMap(map['familyConnection']),
-      gender: Genders.values.firstWhere((g) => g.name == map['gender']),
+      gender: Genders.values
+          .firstWhere((g) => g.name == map['gender'].toLowerCase()),
       popularityScore: map['popularityScore']?.toInt(),
     );
   }

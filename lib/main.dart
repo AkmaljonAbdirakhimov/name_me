@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
           create: (context) => getIt<AppStyleBloc>(),
         ),
         BlocProvider(
+          lazy: false,
           create: (context) => getIt<AppUsageBloc>()..add(GetAppUsageEvent()),
         ),
       ],

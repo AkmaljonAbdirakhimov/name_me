@@ -69,7 +69,10 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         ));
       } else {
         final preference = NamePreference.fromMap(state.answers);
-        emit(state.copyWith(currentPreference: preference));
+        emit(state.copyWith(
+          currentPreference: preference,
+          currentAnswer: DateTime.now().toIso8601String(),
+        ));
       }
     } catch (e, stack) {
       debugPrint(e.toString());
@@ -88,10 +91,15 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
 
         final savedAnswer = state.answers[previousQuestion.type];
 
-        emit(state.copyWith(
-          currentQuestionIndex: previousIndex,
+        final newState = QuestionnaireState(
+          answers: state.answers,
           currentAnswer: savedAnswer,
-        ));
+          currentQuestionIndex: previousIndex,
+          currentPreference: null,
+          questions: state.questions,
+        );
+
+        emit(newState);
       }
     } catch (e, stack) {
       debugPrint(e.toString());

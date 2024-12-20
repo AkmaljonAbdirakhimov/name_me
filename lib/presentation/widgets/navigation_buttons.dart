@@ -16,7 +16,6 @@ class NavigationButtons extends StatelessWidget {
         final isLastQuestion =
             state.currentQuestionIndex == state.questions.length - 1;
         final hasAnswer = state.currentAnswer?.isNotEmpty == true;
-
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(

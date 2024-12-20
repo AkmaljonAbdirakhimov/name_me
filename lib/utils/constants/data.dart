@@ -202,5 +202,5 @@ class AppConstants {
     "TJ": "Tajikistan"
   };
 
-  static const int firstTimeUsageCount = 1;
+  static const int firstTimeUsageCount = 3;
 }

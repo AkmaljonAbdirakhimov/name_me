@@ -27,31 +27,49 @@ class GenerateNamesService {
         final text = response.text ?? '';
         buffer += text;
 
-        final startIndex = buffer.indexOf('[');
-        final endIndex = buffer.lastIndexOf(']');
+        // Keep processing while we can find complete objects
+        while (true) {
+          // Find the start of a JSON object
+          final startIndex = buffer.indexOf('{');
+          if (startIndex == -1) break;
 
-        try {
-          if (startIndex != -1 && endIndex != -1) {
-            final List<dynamic> parsed =
-                json.decode(buffer.substring(startIndex, endIndex + 1));
-            final suggestions =
-                parsed.map((json) => NameSuggestion.fromMap(json)).toList();
+          // Track nested braces
+          int braceCount = 0;
+          int endIndex = -1;
 
-            // Yield any new suggestions
-            for (final suggestion in suggestions) {
-              yield suggestion;
+          // Scan for matching closing brace
+          for (int i = startIndex; i < buffer.length; i++) {
+            if (buffer[i] == '{') braceCount++;
+            if (buffer[i] == '}') braceCount--;
+
+            if (braceCount == 0) {
+              endIndex = i + 1;
+              break;
             }
-            buffer = buffer.substring(endIndex + 1);
           }
-        } catch (e) {
-          log('Error parsing remaining buffer: $e');
-          continue;
+
+          // If we didn't find a complete object, break and wait for more data
+          if (endIndex == -1) break;
+
+          // Try to parse the complete object
+          try {
+            final jsonStr = buffer.substring(startIndex, endIndex);
+            final parsed = json.decode(jsonStr);
+            final suggestion = NameSuggestion.fromMap(parsed);
+            yield suggestion;
+
+            // Remove the processed object from buffer
+            buffer = buffer.substring(endIndex).trim();
+          } catch (e) {
+            log('Parse error: $e for JSON: ${buffer.substring(startIndex, endIndex)}');
+            // Remove the problematic part and continue
+            buffer = buffer.substring(endIndex).trim();
+          }
         }
       }
     } catch (e, stack) {
       debugPrint(e.toString());
       debugPrint(stack.toString());
-
       throw "try_later";
     }
   }

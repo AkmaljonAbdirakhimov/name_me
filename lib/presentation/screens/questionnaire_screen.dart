@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:name_me/utils/utils.dart';
 
 import '../../application/app_usage/app_usage_bloc.dart';
 import '../../application/application.dart';
+import '../../injection.dart';
 import '../../utils/helpers/dialogs.dart';
 import '../presentation.dart';
 import '../widgets/app_title.dart';
@@ -17,7 +17,7 @@ class QuestionnaireScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetIt.I<QuestionnaireBloc>(),
+      create: (context) => getIt.get<QuestionnaireBloc>(),
       child: Builder(builder: (context) {
         return Scaffold(
           appBar: AppBar(
@@ -28,7 +28,7 @@ class QuestionnaireScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (ctx) {
                     return BlocProvider(
-                      create: (context) => GetIt.I<NameSuggestionsBloc>()
+                      create: (context) => getIt.get<NameSuggestionsBloc>()
                         ..add(const NameSuggestionsEvent.loadFavoriteNames()),
                       child: const FavoriteNamesScreen(),
                     );
@@ -55,7 +55,7 @@ class QuestionnaireScreen extends StatelessWidget {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (ctx) {
                     return BlocProvider(
-                      create: (context) => GetIt.I<NameSuggestionsBloc>()
+                      create: (context) => getIt.get<NameSuggestionsBloc>()
                         ..add(NameSuggestionsEvent.generateNames(
                             state.currentPreference!))
                         ..add(const NameSuggestionsEvent.loadFavoriteNames()),
