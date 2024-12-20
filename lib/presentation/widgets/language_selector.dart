@@ -30,36 +30,41 @@ class LanguageSelector extends StatelessWidget {
       itemBuilder: (BuildContext context) => [
         PopupMenuItem(
           value: const Locale('uz'),
-          child: _buildLanguageItem('O\'zbek', 'uz'),
+          child: _buildLanguageItem(context, 'O\'zbek', 'uz'),
         ),
         PopupMenuItem(
           value: const Locale('ru'),
-          child: _buildLanguageItem('Русский', 'ru'),
+          child: _buildLanguageItem(context, 'Русский', 'ru'),
         ),
         PopupMenuItem(
           value: const Locale('en'),
-          child: _buildLanguageItem('English', 'en'),
+          child: _buildLanguageItem(context, 'English', 'en'),
         ),
       ],
     );
   }
 
-  Widget _buildLanguageItem(String title, String code) {
+  Widget _buildLanguageItem(BuildContext context, String title, String code) {
     return Row(
       children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.pink[50],
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Text(
-            code.toUpperCase(),
-            style: TextStyle(
-              color: Colors.pink[300],
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+        BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
+          selector: (state) => state.appColor,
+          builder: (context, appColor) {
+            return Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: appColor[50],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                code.toUpperCase(),
+                style: TextStyle(
+                  color: appColor[300],
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
+          },
         ),
         const SizedBox(width: 12),
         Text(

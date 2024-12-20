@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAcAeQASaNegX39oXGmRdtIM8WDXoEFxts',
-    appId: '1:591145762669:android:e33bb6cda4dce32bd4e464',
+    appId: '1:591145762669:android:39e409f28ebb51e1d4e464',
     messagingSenderId: '591145762669',
     projectId: 'uz-name-baby',
     storageBucket: 'uz-name-baby.firebasestorage.app',
@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'uz-name-baby.firebasestorage.app',
     iosBundleId: 'uz.name.baby',
   );
+
 }
