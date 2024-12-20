@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
             child: ConstrainedBox(
               constraints: const BoxConstraints(
                 maxWidth: 500,
-              ), // Set your desired max width
+              ),
               child: child!,
             ),
           );
