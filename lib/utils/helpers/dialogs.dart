@@ -17,7 +17,7 @@ class AppDialogs {
 
     String getRandomTip(BuildContext context) {
       final random = Random();
-      final currentTipIndex = random.nextInt(20);
+      final currentTipIndex = random.nextInt(19) + 1;
       final tip = tr("tips.$currentTipIndex");
       return tip;
     }
