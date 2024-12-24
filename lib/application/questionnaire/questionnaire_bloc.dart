@@ -42,10 +42,15 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         newAnswers[currentQuestion.type] = event.answer;
       }
 
-      emit(state.copyWith(
+      final newState = QuestionnaireState(
         answers: newAnswers,
         currentAnswer: event.answer,
-      ));
+        currentQuestionIndex: state.currentQuestionIndex,
+        currentPreference: null,
+        questions: state.questions,
+      );
+
+      emit(newState);
     } catch (e, stack) {
       debugPrint(e.toString());
       debugPrint(stack.toString());
