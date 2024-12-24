@@ -25,6 +25,7 @@ class AppDialogs {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
         content: BlocSelector<AppStyleBloc, AppStyleState, MaterialColor>(
           selector: (state) => state.appColor,
           builder: (context, appColor) {
